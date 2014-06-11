@@ -246,8 +246,13 @@ var UnityObject2 = function (config) {
      * @private
      */        
 	function _getWinInstall() {
-        
-		var url = cfg.fullInstall ? "UnityWebPlayerFull.exe" : "UnityWebPlayer.exe";
+        var url = "";
+
+        if (ua.x64) {
+            url = cfg.fullInstall ? "UnityWebPlayerFull64.exe" : "UnityWebPlayer64.exe";
+        } else {
+            url = cfg.fullInstall ? "UnityWebPlayerFull.exe" : "UnityWebPlayer.exe";
+        }
         
 		if (cfg.referrer !== null) {
             
@@ -1206,13 +1211,9 @@ var UnityObject2 = function (config) {
                     }
                 } catch(e) {}
 
-                if (!activeXSupported || ua.x64) {
+                if (!activeXSupported) {
                     status = kUnsupported;
-                    if (ua.x64) {
-                        data = "WIN-IEx64";
-                    } else {
-                        data = "ActiveXFailed";
-                    }
+                    data = "ActiveXFailed";
                 } else {
                     status = kMissing;
                     try {
@@ -1449,6 +1450,10 @@ var UnityObject2 = function (config) {
             // Always fall back to good old manual (download) install.
             var method = 'Manual';
             
+            //We only have manual install for 64bit plugin so far.
+            if (ua.x64)
+                return method;
+
             // Is Java available and not yet attempted?
             if (cfg.enableJava && ua.java && triedJavaInstall === false) {
                 
