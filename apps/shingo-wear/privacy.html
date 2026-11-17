@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プライバシーポリシー | Shingo-Wear</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-canvas: #ffffff;
+      --bg-subtle: #f6f8fa;
+      --fg-default: #1f2328;
+      --fg-muted: #656d76;
+      --fg-accent: #0969da;
+      --border-default: #d0d7de;
+      --border-muted: rgba(209, 217, 224, 0.7);
+      --code-bg: rgba(175, 184, 193, 0.2);
+      --btn-hover: #f3f4f6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-canvas: #0d1117;
+        --bg-subtle: #161b22;
+        --fg-default: #e6edf3;
+        --fg-muted: #8b949e;
+        --fg-accent: #58a6ff;
+        --border-default: #30363d;
+        --border-muted: #21262d;
+        --code-bg: rgba(110, 118, 129, 0.4);
+        --btn-hover: #30363d;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background-color: var(--bg-canvas);
+      color: var(--fg-default);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.65;
+      word-wrap: break-word;
+    }
+    .page-header {
+      background-color: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-default);
+      padding: 16px 24px;
+    }
+    .page-header-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--fg-default);
+      text-decoration: none;
+    }
+    .brand-badge {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border-default);
+      color: var(--fg-muted);
+    }
+    .top-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-default);
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover {
+      background-color: var(--btn-hover);
+      text-decoration: none;
+    }
+    .nav-link.active {
+      background-color: var(--bg-canvas);
+      border-color: var(--border-default);
+      font-weight: 600;
+    }
+    .container {
+      max-width: 880px;
+      margin: 24px auto 48px;
+      padding: 0 16px;
+    }
+    .readme-box {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      background-color: var(--bg-canvas);
+      overflow: hidden;
+    }
+    .readme-bar {
+      background-color: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-default);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .readme-bar-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .readme-meta {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--fg-muted);
+    }
+    .markdown-body {
+      padding: 28px 32px;
+    }
+    @media (max-width: 600px) {
+      .markdown-body { padding: 20px 16px; }
+    }
+    .markdown-body h1 {
+      font-size: 28px;
+      font-weight: 600;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--border-muted);
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body h2 {
+      font-size: 20px;
+      font-weight: 600;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--border-muted);
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+    .markdown-body p {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body ul {
+      padding-left: 2em;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body li + li {
+      margin-top: 6px;
+    }
+    .markdown-body code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 85%;
+      padding: 0.2em 0.4em;
+      background-color: var(--code-bg);
+      border-radius: 6px;
+    }
+    .markdown-body a {
+      color: var(--fg-accent);
+      text-decoration: none;
+    }
+    .markdown-body a:hover {
+      text-decoration: underline;
+    }
+    .markdown-body blockquote {
+      margin: 0 0 16px 0;
+      padding: 0 1em;
+      color: var(--fg-muted);
+      border-left: 0.25em solid var(--border-default);
+    }
+    .site-footer {
+      max-width: 880px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+      font-size: 12px;
+      color: var(--fg-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .site-footer a {
+      color: var(--fg-muted);
+      text-decoration: none;
+    }
+    .site-footer a:hover {
+      color: var(--fg-accent);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-header-inner">
+      <a class="brand" href="./index.html">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16Zm.25-11.25a1.25 1.25 0 1 0-2.5 0 1.25 1.25 0 0 0 2.5 0Zm-1.5 2.5c-.69 0-1.25.56-1.25 1.25v2.75a.75.75 0 0 0 1.5 0V9.5h.5v2.25a.75.75 0 0 0 1.5 0V8.5c0-.69-.56-1.25-1.25-1.25h-1.5Z"/>
+        </svg>
+        <span>Shingo-Wear</span>
+        <span class="brand-badge">Wear OS</span>
+      </a>
+      <nav class="top-nav">
+        <a class="nav-link" href="./index.html">概要</a>
+        <a class="nav-link active" href="./privacy.html">プライバシーポリシー</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <article class="readme-box">
+      <div class="readme-bar">
+        <span class="readme-bar-title">
+          <span>PRIVACY.md</span>
+        </span>
+        <span class="readme-meta">最終更新日: 2026年11月17日</span>
+      </div>
+      <div class="markdown-body">
+        <h1>Shingo-Wear プライバシーポリシー</h1>
+
+        <blockquote>
+          <p>本プライバシーポリシーは、Wear OS アプリケーション「Shingo-Wear」（パッケージ名：<code>jp.nobnak.shingo_wear</code>、以下「本アプリ」）における利用者情報および端末権限の取り扱いについて定めるものです。</p>
+        </blockquote>
+
+        <h2>1. 利用する端末権限と目的</h2>
+        <p>本アプリは、高度化PICS（歩行者等支援情報通信システム）の路側機から発信される公開 BLE アドバタイズパケットを受信するため、以下の端末権限を使用します。</p>
+        <ul>
+          <li>
+            <strong>付近のデバイス / Bluetooth スキャン（<code>BLUETOOTH_SCAN</code> 等）</strong><br />
+            周囲の高度化PICS対応信号機がブロードキャストする BLE パケット（Manufacturer ID: <code>0x01CE</code>）を受信するために使用します。ペアリングや双方向通信は行いません。
+          </li>
+          <li>
+            <strong>位置情報（<code>ACCESS_FINE_LOCATION</code>・<code>ACCESS_COARSE_LOCATION</code>）</strong><br />
+            Android / Wear OS の OS 仕様上、BLE スキャン結果を取得するためにシステムから要求される権限として使用します。本アプリが GPS により利用者の位置を追跡・記録することはありません。
+          </li>
+        </ul>
+
+        <h2>2. 情報の収集・送信・保存について</h2>
+        <ul>
+          <li><strong>個人情報の非収集</strong>：本アプリは、氏名、メールアドレス、端末識別子などの個人を特定できる情報を一切収集しません。</li>
+          <li><strong>外部送信なし</strong>：本アプリはインターネット通信権限を持たず、受信した BLE パケットデータ、交差点情報、および位置情報を外部サーバーへ送信することは一切ありません。すべての解析処理は利用者のウォッチ端末内のメモリ上でのみリアルタイムに行われます。</li>
+          <li><strong>永続保存なし</strong>：受信した信号状態やデバッグログはアプリ終了時に破棄され、端末内ストレージにも保存されません（初回免責事項の同意フラグのみ設定として端末内に保存されます）。</li>
+          <li><strong>第三者提供・広告なし</strong>：広告配信 SDK やアクセス解析ツールは組み込んでおらず、第三者へのデータ共有・販売は一切行いません。</li>
+        </ul>
+
+        <h2>3. 権限の取り消し</h2>
+        <p>
+          利用者は、Wear OS 端末の「設定」＞「アプリ」＞「Shingo-Wear」＞「権限」から、いつでも Bluetooth および位置情報の権限を取り消すことができます。
+        </p>
+
+        <h2>4. 免責事項</h2>
+        <p>
+          本アプリは高度化PICS信号機からの公開電波を視覚・振動で補助表示するものであり、安全を保証するものではありません。横断時は必ず現地の信号機と周囲の交通状況を目視で確認してください。
+        </p>
+
+        <h2>5. お問い合わせ</h2>
+        <p>
+          本プライバシーポリシーまたは本アプリに関するお問い合わせは、以下の連絡先までご連絡ください。<br />
+          開発者連絡先：<a href="mailto:nobu.nakata@gmail.com">nobu.nakata@gmail.com</a>
+        </p>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <span>Shingo-Wear — Wear OS Advanced PICS Signal Monitor</span>
+      <span><a href="./index.html">アプリ紹介・サポートページへ戻る</a></span>
+    </footer>
+  </div>
+</body>
+</html>

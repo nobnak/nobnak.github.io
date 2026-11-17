@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shingo-Wear — Wear OS 歩行者信号モニター</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-canvas: #ffffff;
+      --bg-subtle: #f6f8fa;
+      --fg-default: #1f2328;
+      --fg-muted: #656d76;
+      --fg-accent: #0969da;
+      --border-default: #d0d7de;
+      --border-muted: rgba(209, 217, 224, 0.7);
+      --code-bg: rgba(175, 184, 193, 0.2);
+      --btn-bg: #f6f8fa;
+      --btn-hover: #f3f4f6;
+      --btn-border: rgba(31, 35, 40, 0.15);
+      --badge-bg: #dafbe1;
+      --badge-fg: #1a7f37;
+      --warn-bg: #fff8c5;
+      --warn-border: #d4a72c;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-canvas: #0d1117;
+        --bg-subtle: #161b22;
+        --fg-default: #e6edf3;
+        --fg-muted: #8b949e;
+        --fg-accent: #58a6ff;
+        --border-default: #30363d;
+        --border-muted: #21262d;
+        --code-bg: rgba(110, 118, 129, 0.4);
+        --btn-bg: #21262d;
+        --btn-hover: #30363d;
+        --btn-border: rgba(240, 246, 252, 0.1);
+        --badge-bg: rgba(46, 160, 67, 0.15);
+        --badge-fg: #3fb950;
+        --warn-bg: rgba(187, 128, 9, 0.15);
+        --warn-border: rgba(187, 128, 9, 0.4);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background-color: var(--bg-canvas);
+      color: var(--fg-default);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
+    .page-header {
+      background-color: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-default);
+      padding: 16px 24px;
+    }
+    .page-header-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--fg-default);
+      text-decoration: none;
+    }
+    .brand-badge {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border-default);
+      color: var(--fg-muted);
+    }
+    .top-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-default);
+      text-decoration: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover {
+      background-color: var(--btn-hover);
+      text-decoration: none;
+    }
+    .nav-link.active {
+      background-color: var(--bg-canvas);
+      border-color: var(--border-default);
+      font-weight: 600;
+    }
+    .container {
+      max-width: 880px;
+      margin: 24px auto 48px;
+      padding: 0 16px;
+    }
+    .readme-box {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      background-color: var(--bg-canvas);
+      overflow: hidden;
+    }
+    .readme-bar {
+      background-color: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-default);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .markdown-body {
+      padding: 28px 32px;
+    }
+    @media (max-width: 600px) {
+      .markdown-body { padding: 20px 16px; }
+    }
+    .markdown-body h1 {
+      font-size: 28px;
+      font-weight: 600;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--border-muted);
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body h2 {
+      font-size: 20px;
+      font-weight: 600;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--border-muted);
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+    .markdown-body p {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body ul {
+      padding-left: 2em;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body li + li {
+      margin-top: 6px;
+    }
+    .markdown-body code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 85%;
+      padding: 0.2em 0.4em;
+      background-color: var(--code-bg);
+      border-radius: 6px;
+    }
+    .markdown-body a {
+      color: var(--fg-accent);
+      text-decoration: none;
+    }
+    .markdown-body a:hover {
+      text-decoration: underline;
+    }
+    .markdown-body blockquote {
+      margin: 0 0 16px 0;
+      padding: 0 1em;
+      color: var(--fg-muted);
+      border-left: 0.25em solid var(--border-default);
+    }
+    .warn-box {
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      background-color: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-default) !important;
+      background-color: var(--btn-bg);
+      border: 1px solid var(--btn-border);
+      border-radius: 6px;
+      text-decoration: none !important;
+      margin-bottom: 16px;
+    }
+    .btn:hover {
+      background-color: var(--btn-hover);
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 999px;
+      background-color: var(--badge-bg);
+      color: var(--badge-fg);
+      margin-right: 6px;
+      margin-bottom: 12px;
+    }
+    .site-footer {
+      max-width: 880px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+      font-size: 12px;
+      color: var(--fg-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .site-footer a {
+      color: var(--fg-muted);
+      text-decoration: none;
+    }
+    .site-footer a:hover {
+      color: var(--fg-accent);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-header-inner">
+      <a class="brand" href="./index.html">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16Zm.25-11.25a1.25 1.25 0 1 0-2.5 0 1.25 1.25 0 0 0 2.5 0Zm-1.5 2.5c-.69 0-1.25.56-1.25 1.25v2.75a.75.75 0 0 0 1.5 0V9.5h.5v2.25a.75.75 0 0 0 1.5 0V8.5c0-.69-.56-1.25-1.25-1.25h-1.5Z"/>
+        </svg>
+        <span>Shingo-Wear</span>
+        <span class="brand-badge">Wear OS</span>
+      </a>
+      <nav class="top-nav">
+        <a class="nav-link active" href="./index.html">概要</a>
+        <a class="nav-link" href="./privacy.html">プライバシーポリシー</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <article class="readme-box">
+      <div class="readme-bar">
+        <span>README.md</span>
+      </div>
+      <div class="markdown-body">
+        <h1>Shingo-Wear</h1>
+        <div>
+          <span class="tag">Wear OS スタンドアロン</span>
+          <span class="tag">高度化PICS対応</span>
+          <span class="tag">オフライン完結</span>
+        </div>
+
+        <p>
+          <strong>Shingo-Wear</strong> は、日本国内の交差点に整備されている<strong>高度化PICS（歩行者等支援情報通信システム / BLE信号機）</strong>が発信する Bluetooth Low Energy (BLE) アドバタイズ信号を受信し、スマートウォッチ上で信号の灯色と変化の目安を直感的に表示する Wear OS スタンドアロンアプリです。
+        </p>
+
+        <div class="warn-box">
+          <strong>安全上のご注意（免責事項）</strong><br />
+          本アプリの表示は歩行支援のための参考情報です。電波状況や設置環境により表示が遅れたり実際の信号と異なる場合があります。横断の際は、必ず現地の歩行者用信号機および周囲の安全を目視でご確認ください。
+        </div>
+
+        <a class="btn" href="./privacy.html">プライバシーポリシーを読む →</a>
+
+        <h2>主な機能</h2>
+        <ul>
+          <li><strong>視覚的かつミニマルな信号表示</strong>：青（横断可）・青点滅（注意）・赤（停止）を、色・外周プログレスリング・歩行者ピクトグラムで直感的に表示します。</li>
+          <li><strong>手首へのハプティクス（触覚通知）</strong>：灯色が切り替わったタイミングや青点滅中の注意喚起を手首の振動パターンで通知します。</li>
+          <li><strong>完全オフライン・通信不要</strong>：周辺路側機からのBLEブロードキャスト（Company ID <code>0x01CE</code>）を受信専用で解析するため、ペアリングやインターネット通信は不要です。</li>
+          <li><strong>デバッグ &amp; 手元シミュレータ</strong>：画面タップで受信パケットの16進ダンプ・RSSI・交差点IDを確認できるほか、信号機がない場所でも動作検証できるシミュレータモードを搭載しています。</li>
+        </ul>
+
+        <h2>対応環境・利用条件</h2>
+        <ul>
+          <li>Wear OS 3.0 以上（Android API Level 30 以上）を搭載した BLE 対応スマートウォッチ</li>
+          <li>日本国内の「高度化PICS」対応交差点（BLE路側機設置箇所）</li>
+        </ul>
+
+        <h2>お問い合わせ・サポート</h2>
+        <blockquote>
+          <p>
+            不具合報告・ご要望・プライバシーに関するお問い合わせは、下記メールアドレスまでご連絡ください。<br />
+            開発者連絡先：<a href="mailto:nobu.nakata@gmail.com">nobu.nakata@gmail.com</a>
+          </p>
+        </blockquote>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <span>Shingo-Wear — Wear OS Advanced PICS Signal Monitor</span>
+      <span><a href="./privacy.html">プライバシーポリシー</a></span>
+    </footer>
+  </div>
+</body>
+</html>
